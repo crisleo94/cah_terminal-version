@@ -6,6 +6,8 @@ There are 4 players, when a round starts the system will shuffle 4 `white` cards
 
 # TODO
 
+- [ ] Create a `Vec<Players>` not a `Vec<&str>`
+- [ ] Define all the white cards for each player once their names are input
 - [ ] Create the shuffle algorithm
 - [ ] Always show all the cards for each player on the terminal...?
 - [ ] After a card is delivered (white or black) remove it from the main arrays
