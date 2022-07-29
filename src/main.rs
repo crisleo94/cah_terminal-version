@@ -118,7 +118,7 @@ pub fn start_game() {
     // suffle 4 white cards for each player
     for player in players.iter_mut() {
         let mut player_cards: Vec<WhiteCard> = Vec::new();
-        for _ in 0..4 {
+        for _ in 0..10 {
             let mut rng = rand::thread_rng();
             let index = rng.gen_range(0..white_cards.len());
             player_cards.push(white_cards.remove(index));
@@ -138,25 +138,39 @@ pub fn start_game() {
             "THE NUMBER OF CARDS TO BE USED IS: {}",
             selected_black_card.pick.to_string().yellow().bold()
         );
-        println!(
-            "{}",
-            "PLEASE SELECT A CARD TO PLAY ENTERING THE CORRESPONDING NUMBER:"
-                .bold()
-                .green()
-        );
 
         for (pos, card) in player.cards.iter().enumerate() {
             println!("{}: {}", pos, card.text.magenta().italic());
         }
 
-        let picked_card_index = get_input();
-        let picked_card = player
-            .cards
-            .get(picked_card_index.parse::<usize>().unwrap())
-            .unwrap();
+        if selected_black_card.pick > 1 {
+            println!("{}", "PLEASE ENTER THE CARDS YOU WANT TO USE FOLLOWED BY AN ENTER:".bold().green());
+            let picked_card_index = [get_input(), get_input()];
+            let picked_card = player
+                .cards
+                .get(picked_card_index[0].parse::<usize>().unwrap())
+                .unwrap();
+            let picked_card2 = player
+                .cards
+                .get(picked_card_index[1].parse::<usize>().unwrap())
+                .unwrap();
+    
+            println!("{}{}", "YOU PICKED:".bold().green(), picked_card.text);
+            println!("");
+            println!("{}{}", "AND:".bold().green(), picked_card2.text);
+            println!("");
+        } else {
+            println!("{}", "PLEASE ENTER THE CARD YOU WANT TO USE:".bold().green());
+            let picked_card_index = get_input();
+            let picked_card = player
+                .cards
+                .get(picked_card_index.parse::<usize>().unwrap())
+                .unwrap();
+    
+            println!("{}{}", "YOU PICKED:".bold().green(), picked_card.text);
+            println!("");
+        }
 
-        println!("{}{}", "YOU PICKED:".bold().green(), picked_card.text);
-        println!("");
     }
 }
 
